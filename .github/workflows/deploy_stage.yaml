@@ -28,6 +28,6 @@ jobs:
       - name: Bootstrap CDK
         run: npx cdk bootstrap  aws://${{ secrets.QA_AWS_ACCOUNT_ID}}/${{ secrets.AWS_REGION}}
       - name: Synth stack
-        run: npx cdk synth
+        run: cd packages/backend && npx cdk synth
       - name: Deploy stack
         run: npx cdk deploy --require-approval never
