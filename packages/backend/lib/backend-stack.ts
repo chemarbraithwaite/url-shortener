@@ -25,6 +25,7 @@ export class BackendStack extends cdk.Stack {
     const urlsTable = new Table(this, "Urls", {
       tableName: "Urls",
       partitionKey: { name: "url", type: AttributeType.STRING },
+      timeToLiveAttribute: "expiresAt",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
