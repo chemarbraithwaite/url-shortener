@@ -30,4 +30,4 @@ jobs:
       - name: Synth stack
         run: cd packages/backend && npx cdk synth
       - name: Deploy stack
-        run: npx cdk deploy --require-approval never
+        run: cd packages/backend && npx cdk deploy --require-approval never
