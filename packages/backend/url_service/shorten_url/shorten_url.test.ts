@@ -110,6 +110,7 @@ describe("Shorten URL", () => {
     expect(response.Item).toEqual({
       url: shortUrl,
       longUrl,
+      expiresAt: expect.any(Number),
     });
 
     docClient.destroy();

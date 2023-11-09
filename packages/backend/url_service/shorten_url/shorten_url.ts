@@ -55,6 +55,7 @@ const saveItem = async (tableName: string, longUrl: string) => {
         Item: {
           url: url,
           longUrl: longUrl,
+          expiresAt: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30, // 30 days
         },
         ConditionExpression: "attribute_not_exists(#url)",
         ExpressionAttributeNames: {
