@@ -2,4 +2,4 @@ The boilerplate for this project was generated using `cdk init app --language ty
 
 # High Level Architecture 
 
-![Alt ](/ArchitectureDiagram.png?raw=true)
+![Alt ](/packages/backend/ArchitectureDiagram.png?raw=true)
