@@ -9,7 +9,7 @@ export const dbConfig = {
     region: "local",
   }),
   ...(process.env.AWS_SAM_LOCAL && {
-    endpoint: "hhttp://172.16.123.1:8000",
+    endpoint: "http://172.16.123.1:8000",
     sslEnabled: false,
     region: "localhost",
     credentials: {
@@ -26,4 +26,8 @@ export const getDbClient = () => {
       convertEmptyValues: true,
     },
   });
+};
+
+export const getTableName = () => {
+  return process.env.AWS_SAM_LOCAL ? "Urls" : process.env.TABLE_NAME;
 };

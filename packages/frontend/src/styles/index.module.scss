@@ -1,0 +1,8 @@
+@import 'mixins.scss';
+@import 'fonts.scss';
+@import 'colors.scss';
+@import 'animations.scss';
+
+:export {
+    primaryColor: $color-primary;
+}

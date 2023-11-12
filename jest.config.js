@@ -4,4 +4,5 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest",
   },
   preset: "jest-dynalite",
+  setupFiles: ["./test/setup.ts"],
 };

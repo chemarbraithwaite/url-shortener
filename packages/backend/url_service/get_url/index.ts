@@ -6,14 +6,14 @@ export const handler = async (
   event: APIGatewayEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const shortenedUrl = await getUrl(event);
+    const longUrl = await getUrl(event);
 
     return {
       body: "",
       statusCode: StatusCode.redirect,
       headers: {
         ...defaultHeaders,
-        Location: shortenedUrl,
+        Location: longUrl,
       },
     };
   } catch (error) {
