@@ -22,6 +22,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: npm run dev --w packages/frontend
+          project: ./packages/frontend
 
       - name: Delete env file
         run: rm packages/frontend/.env
