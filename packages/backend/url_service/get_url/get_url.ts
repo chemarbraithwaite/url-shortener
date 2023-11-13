@@ -1,6 +1,6 @@
 import { APIGatewayEvent } from "aws-lambda";
-import { RequestError, StatusCode } from "../_shared/errors";
-import { dbConfig, getDbClient, getTableName } from "../_shared/configs";
+import { RequestError, StatusCode, getOrigin } from "../_shared/errors";
+import { getDbClient, getTableName } from "../_shared/configs";
 
 const docClient = getDbClient();
 
@@ -8,22 +8,19 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
   event: APIGatewayEvent
 ) => {
   const tableName = getTableName();
+  const origin = getOrigin(event);
 
   if (!tableName) {
     console.log("Environment variable 'Table Name' is undefined");
     throw new RequestError(
       StatusCode.internalServerError,
       "Internal server error",
-      event?.headers?.origin || event?.headers?.Origin || ""
+      origin
     );
   }
 
   if (!event.pathParameters || !event.pathParameters.shortUrl) {
-    throw new RequestError(
-      StatusCode.badRequest,
-      "Invalid url",
-      event?.headers?.origin || event?.headers?.Origin || ""
-    );
+    throw new RequestError(StatusCode.badRequest, "Invalid url", origin);
   }
 
   const shortUrl = event.pathParameters.shortUrl;
@@ -36,7 +33,7 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
   });
 
   if (!response.Item || !response.Item.longUrl) {
-    return `${event.headers.origin ?? event?.headers?.Origin}/404/${shortUrl}`;
+    return `${origin}/404/${shortUrl}`;
   }
 
   return response.Item.longUrl;

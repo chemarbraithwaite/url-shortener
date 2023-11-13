@@ -1,6 +1,6 @@
 import { APIGatewayEvent } from "aws-lambda";
 import { getDbClient, getTableName } from "../_shared/configs";
-import { RequestError, StatusCode } from "../_shared/errors";
+import { RequestError, StatusCode, getOrigin } from "../_shared/errors";
 import { getShortUrl, isValidUrl } from "./helpers";
 const CONDITION_CHECK_FIALED = "ConditionalCheckFailedException";
 
@@ -26,7 +26,7 @@ export const shortenedUrl: (event: APIGatewayEvent) => Promise<string> = async (
     throw new RequestError(
       StatusCode.badRequest,
       "Invalid url",
-      event?.headers?.Referer ?? ""
+      getOrigin(event)
     );
   }
 
@@ -59,11 +59,12 @@ export const shortenedUrl: (event: APIGatewayEvent) => Promise<string> = async (
 };
 
 const getLongUrl = (event: APIGatewayEvent) => {
+  const origin = getOrigin(event);
   if (!event.body) {
     throw new RequestError(
       StatusCode.badRequest,
       "Invalid request body",
-      event?.headers?.Referer ?? ""
+      origin
     );
   }
 
@@ -73,7 +74,7 @@ const getLongUrl = (event: APIGatewayEvent) => {
     throw new RequestError(
       StatusCode.badRequest,
       "Invalid request body",
-      event?.headers?.Referer ?? ""
+      origin
     );
   }
 

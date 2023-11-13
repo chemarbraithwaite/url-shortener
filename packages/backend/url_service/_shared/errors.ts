@@ -1,6 +1,6 @@
-import { APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 
-export const getHeader = (origin: string) => ({
+export const getHeaders = (origin: string) => ({
   "Access-Control-Allow-Headers":
     "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
   "Access-Control-Allow-Origin": process.env.CORS_ORIGINS?.split(",")?.includes(
@@ -9,6 +9,9 @@ export const getHeader = (origin: string) => ({
     ? origin
     : "",
 });
+
+export const getOrigin = (event: APIGatewayEvent) =>
+  event?.headers?.origin || event?.headers?.Origin || "";
 
 export enum StatusCode {
   redirect = 302,
@@ -24,7 +27,7 @@ export class RequestError extends Error {
   constructor(statusCode: StatusCode, message: string, origin: string) {
     super(message);
     this.statusCode = statusCode;
-    this.headers = getHeader(origin);
+    this.headers = getHeaders(origin);
   }
 }
 
@@ -42,17 +45,19 @@ export const errorHandler = (
     };
   }
 
+  const headers = getHeaders(origin);
+
   if (error instanceof Error) {
     return {
       statusCode: StatusCode.internalServerError,
       body: error.message,
-      headers: getHeader(origin),
+      headers,
     };
   }
 
   return {
     statusCode: StatusCode.internalServerError,
     body: "Internal server error",
-    headers: getHeader(origin),
+    headers,
   };
 };
