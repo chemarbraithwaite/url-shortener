@@ -11,10 +11,15 @@ export const handler = async (
     return {
       body: shortUrl,
       statusCode: 200,
-      headers: getHeader(event?.headers?.origin ?? ""),
+      headers: getHeader(
+        event?.headers?.origin || event?.headers?.Origin || ""
+      ),
     };
   } catch (error) {
     console.log(event);
-    return errorHandler(error, event?.headers?.origin ?? "");
+    return errorHandler(
+      error,
+      event?.headers?.origin || event?.headers?.Origin || ""
+    );
   }
 };

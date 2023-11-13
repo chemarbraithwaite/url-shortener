@@ -12,12 +12,15 @@ export const handler = async (
       body: "",
       statusCode: StatusCode.redirect,
       headers: {
-        ...getHeader(event?.headers?.origin ?? ""),
+        ...getHeader(event?.headers?.origin || event?.headers?.Origin || ""),
         Location: longUrl,
       },
     };
   } catch (error) {
     console.log(event);
-    return errorHandler(error, event?.headers?.origin ?? "");
+    return errorHandler(
+      error,
+      event?.headers?.origin || event?.headers?.Origin || ""
+    );
   }
 };
