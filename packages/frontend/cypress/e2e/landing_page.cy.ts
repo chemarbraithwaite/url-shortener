@@ -4,7 +4,6 @@ const FRONTEND_URL = "http://localhost:5173";
 
 describe("Landing Page (E2E)", () => {
   it("Shorten Url", () => {
-    console.log(BASE_API_URL);
     cy.visit(FRONTEND_URL);
     cy.get('[data-cy="url_input"]').click().type(longUrl);
     cy.get('[data-cy="submit_url"]').click();
