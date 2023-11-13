@@ -20,6 +20,13 @@
     "types": ["jest", "node"],
     "typeRoots": ["./node_modules/@types"]
   },
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.cy.ts",
+    "**/*.test.ts",
+    "packages/frontend/cypress.config.ts",
+    "**/cypress/**/*"
+  ],
   "include": ["./packages/**/*.tsx", "./packages/**/*.ts"]
 }
