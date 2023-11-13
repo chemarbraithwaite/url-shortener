@@ -14,7 +14,7 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
     throw new RequestError(
       StatusCode.internalServerError,
       "Internal server error",
-      event?.headers?.Origin ?? ""
+      event?.headers?.origin ?? ""
     );
   }
 
@@ -22,7 +22,7 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
     throw new RequestError(
       StatusCode.badRequest,
       "Invalid url",
-      event?.headers?.Origin ?? ""
+      event?.headers?.origin ?? ""
     );
   }
 
@@ -36,7 +36,7 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
   });
 
   if (!response.Item || !response.Item.longUrl) {
-    return `${event.headers.Origin}/404/${shortUrl}`;
+    return `${event.headers.origin}/404/${shortUrl}`;
   }
 
   return response.Item.longUrl;
