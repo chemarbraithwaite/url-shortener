@@ -11,6 +11,7 @@ export class BackendStack extends cdk.Stack {
 
     const corsIntegration = new cdk.aws_apigateway.MockIntegration({
       passthroughBehavior: cdk.aws_apigateway.PassthroughBehavior.NEVER,
+      requestParameters: {},
       requestTemplates: {
         "application/json": `{
           "statusCode": 200
@@ -20,13 +21,14 @@ export class BackendStack extends cdk.Stack {
         {
           statusCode: "204",
           responseParameters: {
-            "method.response.header.Access-Control-Allow-Origin": `"${
-              CORS_ORIGINS?.[0] ?? DOMAIN_NAME
-            }"`,
             "method.response.header.Access-Control-Allow-Headers":
-              "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+              "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
             "method.response.header.Access-Control-Allow-Methods":
               "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+            "method.response.header.Vary": "'Origin'",
+            "method.response.header.Access-Control-Allow-Origin": `'${
+              CORS_ORIGINS?.[0] ?? DOMAIN_NAME
+            }'`,
           },
           responseTemplates: {
             "application/json": `
@@ -64,6 +66,7 @@ export class BackendStack extends cdk.Stack {
             "method.response.header.Access-Control-Allow-Origin": true,
             "method.response.header.Access-Control-Allow-Headers": true,
             "method.response.header.Access-Control-Allow-Methods": true,
+            "method.response.header.Vary": true,
           },
         },
       ],
