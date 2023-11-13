@@ -1,10 +1,11 @@
 import * as cdk from "aws-cdk-lib";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
 import { AttributeType, Table } from "aws-cdk-lib/aws-dynamodb";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 import * as path from "path";
-const corsOrigins = ["http://localhost:3000"];
+const corsOrigins = ["http://localhost:5173"];
 
 export class BackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
@@ -34,6 +35,7 @@ export class BackendStack extends cdk.Stack {
       entry: path.join(__dirname, "../url_service/shorten_url/index.ts"),
       handler: "handler",
       timeout: cdk.Duration.seconds(10),
+      runtime: Runtime.NODEJS_18_X,
       environment: {
         CORS_ORIGINS: corsOrigins.toString(),
         TABLE_NAME: urlsTable.tableName,
@@ -47,6 +49,7 @@ export class BackendStack extends cdk.Stack {
       entry: path.join(__dirname, "../url_service/get_url/index.ts"),
       handler: "handler",
       timeout: cdk.Duration.seconds(10),
+      runtime: Runtime.NODEJS_18_X,
       environment: {
         CORS_ORIGINS: corsOrigins.toString(),
         TABLE_NAME: urlsTable.tableName,

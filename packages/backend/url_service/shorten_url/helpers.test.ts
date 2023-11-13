@@ -16,7 +16,7 @@ describe("Helpers", () => {
 
   it("Returns false if url is invalid", () => {
     (axios.head as jest.Mock).mockImplementationOnce(() =>
-      Promise.resolve({
+      Promise.reject({
         status: 404,
       })
     );

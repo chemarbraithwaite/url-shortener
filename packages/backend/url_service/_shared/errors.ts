@@ -7,7 +7,7 @@ export const defaultHeaders = {
 };
 
 export enum StatusCode {
-  redirect = 301,
+  redirect = 302,
   notFound = 404,
   badRequest = 400,
   internalServerError = 500,

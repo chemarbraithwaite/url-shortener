@@ -1,5 +1,5 @@
 import { APIGatewayEvent } from "aws-lambda";
-import { getDbClient } from "../_shared/configs";
+import { getDbClient, getTableName } from "../_shared/configs";
 import { RequestError, StatusCode } from "../_shared/errors";
 import { getShortUrl, isValidUrl } from "./helpers";
 const CONDITION_CHECK_FIALED = "ConditionalCheckFailedException";
@@ -9,7 +9,7 @@ const docClient = getDbClient();
 export const shortenedUrl: (event: APIGatewayEvent) => Promise<string> = async (
   event: APIGatewayEvent
 ) => {
-  const tableName = process.env.TABLE_NAME;
+  const tableName = getTableName();
 
   if (!tableName) {
     console.log("Environment variable 'Table Name' is undefined");

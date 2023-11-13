@@ -1,0 +1,45 @@
+@import '../../styles/index.module.scss';
+
+.NotFound { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: scroll;
+    background-size: cover;
+
+    .warning {
+        color: $red;
+        font-size: px2rem(100px);
+    }
+
+    .title {
+        font-size: $font-size-32;
+        font-weight: 700;
+    }
+
+    .subTitle {
+        font-size: $font-size-18;
+        font-weight: 700;
+    }
+
+    .help {
+        display: flex;
+        padding: 1rem;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 2.5rem;
+        margin-top: 4rem;
+
+        .actionItem {
+            display: flex;
+            align-items: center;
+            max-width: px2rem(400px);
+            gap: 1rem;
+        }
+    }
+
+
+
+}
