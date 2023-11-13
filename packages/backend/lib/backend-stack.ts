@@ -192,6 +192,20 @@ export class BackendStack extends cdk.Stack {
             responseHeadersPolicyId: "67f7725c-6f97-4210-82d7-5512b31e9d03",
           },
         },
+        errorResponses: [
+          {
+            httpStatus: 403,
+            responseHttpStatus: 200,
+            responsePagePath: "/index.html",
+            ttl: cdk.Duration.seconds(10),
+          },
+          {
+            httpStatus: 404,
+            responseHttpStatus: 200,
+            responsePagePath: "/index.html",
+            ttl: cdk.Duration.seconds(10),
+          },
+        ],
         domainNames: [DOMAIN_NAME, WWW_DOMAIN_NAME],
         certificate: httpsCertificate,
       }
