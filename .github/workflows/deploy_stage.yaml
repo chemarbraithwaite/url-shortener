@@ -7,6 +7,8 @@ on:
 
 jobs:
   deploy:
+    env:
+      API_BASE_URL: ${{ secrets.QA_API_URL }}
     name: Deploy to staging
     runs-on: ubuntu-latest
     steps:
@@ -15,6 +17,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+
+      - name: Create env file
+        run: echo "API_BASE_URL=$API_BASE_URL" > packages/frontend/.env
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -25,11 +30,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
       - name: Build frontend
         run: npm run build --w packages/frontend
+
       - name: Bootstrap CDK
         run: npx cdk bootstrap  aws://${{ secrets.QA_AWS_ACCOUNT_ID}}/${{ secrets.AWS_REGION}}
-      - name: Synth stack
-        run: cd packages/backend && npx cdk synth
+
       - name: Deploy stack
-        run: cd packages/backend && npx cdk deploy --require-approval never
+        run: cd packages/backend && CORS_ORIGINS=${{ env.STAGE_CORS_ORIGINS }} DOMAIN_NAME=${{ env.STAGE_DOMAIN_NAME }} npx cdk deploy --require-approval never
