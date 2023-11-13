@@ -23,6 +23,7 @@ jobs:
         with:
           start: npm run dev --w packages/frontend
           project: ./packages/frontend
+          browser: chome
 
       - name: Delete env file
         run: rm packages/frontend/.env
