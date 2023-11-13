@@ -56,7 +56,20 @@ export class BackendStack extends cdk.Stack {
       },
     });
 
-    api.root.addMethod("OPTIONS", corsIntegration);
+    const corsMethodResponse = {
+      methodResponses: [
+        {
+          statusCode: "204",
+          responseParameters: {
+            "method.response.header.Access-Control-Allow-Origin": true,
+            "method.response.header.Access-Control-Allow-Headers": true,
+            "method.response.header.Access-Control-Allow-Methods": true,
+          },
+        },
+      ],
+    };
+
+    api.root.addMethod("OPTIONS", corsIntegration, corsMethodResponse);
 
     const urlsTable = new cdk.aws_dynamodb.Table(this, "Urls", {
       tableName: "Urls",
@@ -109,7 +122,7 @@ export class BackendStack extends cdk.Stack {
       "POST",
       new cdk.aws_apigateway.LambdaIntegration(shortenUrlLambda)
     );
-    urlRootResource.addMethod("OPTIONS", corsIntegration);
+    urlRootResource.addMethod("OPTIONS", corsIntegration, corsMethodResponse);
 
     const urlResource = urlRootResource.addResource("{shortUrl}", {
       defaultMethodOptions: {
@@ -119,7 +132,7 @@ export class BackendStack extends cdk.Stack {
       },
     });
 
-    urlResource.addMethod("OPTIONS", corsIntegration);
+    urlResource.addMethod("OPTIONS", corsIntegration, corsMethodResponse);
     urlResource.addMethod(
       "GET",
       new cdk.aws_apigateway.LambdaIntegration(getLongUrlLambda, {
