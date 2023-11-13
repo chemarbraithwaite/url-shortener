@@ -2,7 +2,7 @@ describe("Landing Page (Stubbed)", () => {
   const errorMessage = "Error message";
   const shortUrl = "shortUrl";
   const longUr = "https://facebook.com";
-  const BASE_API_URL = process.env.CYPRESS_BASE_URL ?? "";
+  const BASE_API_URL = `${Cypress.env("apiUrl")}/url` ?? "";
   const FRONTEND_URL = "http://localhost:5173";
 
   it("Shorten Url", () => {
@@ -18,7 +18,7 @@ describe("Landing Page (Stubbed)", () => {
     cy.url();
     cy.get('[data-cy="url_input"]').click().type("facebook.com");
 
-    cy.intercept("POST", BASE_API_URL, {
+    cy.intercept("POST", `${BASE_API_URL}`, {
       statusCode: 500,
       body: errorMessage,
     });
@@ -26,7 +26,7 @@ describe("Landing Page (Stubbed)", () => {
     cy.get('[data-cy="submit_url"]').click();
     cy.contains(errorMessage);
 
-    cy.intercept("POST", BASE_API_URL, {
+    cy.intercept("POST", `${BASE_API_URL}`, {
       statusCode: 200,
       body: shortUrl,
     });
@@ -38,7 +38,7 @@ describe("Landing Page (Stubbed)", () => {
     cy.get('[data-cy="copy_url"]').realClick();
     cy.contains("Link copied to clipboard!");
 
-    cy.intercept("GET", `${BASE_API_URL}/url/${shortUrl}`, {
+    cy.intercept("GET", `${BASE_API_URL}/${shortUrl}`, {
       statusCode: 302,
       headers: {
         location: longUr,

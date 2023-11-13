@@ -1,5 +1,4 @@
 const longUrl = "https://facebook.com";
-const BASE_API_URL = process.env.CYPRESS_BASE_URL ?? "";
 const FRONTEND_URL = "http://localhost:5173";
 
 describe("Landing Page (E2E)", () => {

@@ -10,7 +10,7 @@ export default defineConfig({
         ...config,
         env: {
           ...config.env,
-          CYPRESS_BASE_URL: process.env.API_BASE_URL,
+          apiUrl: process.env.API_BASE_URL,
         },
       };
     },
