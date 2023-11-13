@@ -26,7 +26,7 @@ export const LandingPage = () => {
 
   const handleCopyUrl = async () => {
     await navigator.clipboard
-      .writeText(`${window.origin}/${shortUrl}`)
+      .writeText(shortUrl)
       .then(() => {
         toast.success("Link copied to clipboard!");
       })
