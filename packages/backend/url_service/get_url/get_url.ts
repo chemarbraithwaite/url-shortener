@@ -15,7 +15,11 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
   }
 
   if (!event.pathParameters || !event.pathParameters.shortUrl) {
-    throw new RequestError(StatusCode.badRequest, "Invalid url");
+    throw new RequestError(
+      StatusCode.badRequest,
+      "Invalid url",
+      event?.headers?.Referer ?? ""
+    );
   }
 
   const shortUrl = event.pathParameters.shortUrl;
