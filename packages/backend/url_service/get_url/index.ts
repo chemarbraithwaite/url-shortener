@@ -12,12 +12,12 @@ export const handler = async (
       body: "",
       statusCode: StatusCode.redirect,
       headers: {
-        ...getHeader(event?.headers?.Referer ?? ""),
+        ...getHeader(event?.headers?.Origin ?? ""),
         Location: longUrl,
       },
     };
   } catch (error) {
     console.log(event);
-    return errorHandler(error, event?.headers?.Referer ?? "");
+    return errorHandler(error, event?.headers?.Origin ?? "");
   }
 };

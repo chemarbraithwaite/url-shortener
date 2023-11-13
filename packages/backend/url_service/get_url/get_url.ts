@@ -11,14 +11,18 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
 
   if (!tableName) {
     console.log("Environment variable 'Table Name' is undefined");
-    throw new Error("Internal server error");
+    throw new RequestError(
+      StatusCode.internalServerError,
+      "Internal server error",
+      event?.headers?.Origin ?? ""
+    );
   }
 
   if (!event.pathParameters || !event.pathParameters.shortUrl) {
     throw new RequestError(
       StatusCode.badRequest,
       "Invalid url",
-      event?.headers?.Referer ?? ""
+      event?.headers?.Origin ?? ""
     );
   }
 
@@ -32,7 +36,7 @@ export const getUrl: (event: APIGatewayEvent) => Promise<string> = async (
   });
 
   if (!response.Item || !response.Item.longUrl) {
-    return `${event.headers.Referer}404/${shortUrl}`;
+    return `${event.headers.Origin}/404/${shortUrl}`;
   }
 
   return response.Item.longUrl;
