@@ -25,6 +25,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      - name: Build frontend
+        run: npm run build --w packages/frontend
       - name: Bootstrap CDK
         run: npx cdk bootstrap  aws://${{ secrets.QA_AWS_ACCOUNT_ID}}/${{ secrets.AWS_REGION}}
       - name: Synth stack

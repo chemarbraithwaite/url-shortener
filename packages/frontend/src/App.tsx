@@ -7,15 +7,23 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LandingPage } from "./pages/Landing/Landing";
-import { NotFound } from "./pages/NotFound";
+import React, { Suspense } from "react";
+
+const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <LandingPage />,
-      errorElement: <NotFound />,
+      lazy: () =>
+        import("./pages/Landing").then((module) => ({
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <module.default />
+            </Suspense>
+          ),
+          errorElement: <NotFound />,
+        })),
     },
     {
       path: "/:linkId",
