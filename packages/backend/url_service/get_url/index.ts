@@ -1,5 +1,5 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { StatusCode, defaultHeaders, errorHandler } from "../_shared/errors";
+import { StatusCode, getHeader, errorHandler } from "../_shared/errors";
 import { getUrl } from "./get_url";
 
 export const handler = async (
@@ -12,12 +12,12 @@ export const handler = async (
       body: "",
       statusCode: StatusCode.redirect,
       headers: {
-        ...defaultHeaders,
+        ...getHeader(event?.headers?.Referer ?? ""),
         Location: longUrl,
       },
     };
   } catch (error) {
     console.log(event);
-    return errorHandler(error);
+    return errorHandler(error, event?.headers?.Referer ?? "");
   }
 };

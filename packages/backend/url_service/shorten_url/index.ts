@@ -1,5 +1,5 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { defaultHeaders, errorHandler } from "../_shared/errors";
+import { getHeader, errorHandler } from "../_shared/errors";
 import { shortenedUrl } from "./shorten_url";
 
 export const handler = async (
@@ -11,10 +11,10 @@ export const handler = async (
     return {
       body: shortUrl,
       statusCode: 200,
-      headers: defaultHeaders,
+      headers: getHeader(event?.headers?.Referer ?? ""),
     };
   } catch (error) {
     console.log(event);
-    return errorHandler(error);
+    return errorHandler(error, event?.headers?.Referer ?? "");
   }
 };

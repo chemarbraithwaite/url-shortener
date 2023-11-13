@@ -17,32 +17,17 @@ export const shortenedUrl: (event: APIGatewayEvent) => Promise<string> = async (
   }
 
   const longUrl = getLongUrl(event);
-  const shortUrl = await saveItem(tableName, longUrl);
-  return shortUrl;
-};
-
-const getLongUrl = (event: APIGatewayEvent) => {
-  if (!event.body) {
-    throw new RequestError(StatusCode.badRequest, "Invalid request body");
-  }
-
-  const requestBody = JSON.parse(event.body);
-
-  if (!requestBody.url) {
-    throw new RequestError(StatusCode.badRequest, "Invalid request body");
-  }
-
-  return requestBody.url;
-};
-
-const saveItem = async (tableName: string, longUrl: string) => {
   let isUrlUnique = false;
   let url: string = "";
 
   const isUrlValid = await isValidUrl(longUrl);
 
   if (!isUrlValid) {
-    throw new RequestError(StatusCode.badRequest, "Invalid url");
+    throw new RequestError(
+      StatusCode.badRequest,
+      "Invalid url",
+      event?.headers?.Referer ?? ""
+    );
   }
 
   // Keep generating short urls until we find one that is unique
@@ -71,4 +56,26 @@ const saveItem = async (tableName: string, longUrl: string) => {
   }
 
   return url;
+};
+
+const getLongUrl = (event: APIGatewayEvent) => {
+  if (!event.body) {
+    throw new RequestError(
+      StatusCode.badRequest,
+      "Invalid request body",
+      event?.headers?.Referer ?? ""
+    );
+  }
+
+  const requestBody = JSON.parse(event.body);
+
+  if (!requestBody.url) {
+    throw new RequestError(
+      StatusCode.badRequest,
+      "Invalid request body",
+      event?.headers?.Referer ?? ""
+    );
+  }
+
+  return requestBody.url;
 };
