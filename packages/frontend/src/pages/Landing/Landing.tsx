@@ -11,7 +11,7 @@ import ToolBar from "../../components/ToolBar";
 
 export const LandingPage = () => {
   const [url, setUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("sdsdwsed");
+  const [shortUrl, setShortUrl] = useState("");
   const [{ loading }, submitUrl] = useAsyncFn(async (url: string) => {
     try {
       const response = await shortenUrl(url);
