@@ -3,6 +3,15 @@
 @import 'colors.scss';
 @import 'animations.scss';
 
+$breakpoint-mobile: 500px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1440px;
+$breakpoint-desktop-lg: 1920px;
+$tool-bar-height: 54px;
+
+
 :export {
     primaryColor: $color-primary;
+    fontFamily: $font-family;
 }

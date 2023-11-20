@@ -11,7 +11,10 @@ export const getHeaders = (origin: string) => ({
 });
 
 export const getOrigin = (event: APIGatewayEvent) =>
-  event?.headers?.origin || event?.headers?.Origin || "";
+  event?.headers?.origin ||
+  event?.headers?.Origin ||
+  event?.headers?.Referer?.replace(/\/+$/, "") ||
+  "";
 
 export enum StatusCode {
   redirect = 302,
