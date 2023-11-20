@@ -5,20 +5,25 @@
 @mixin button {
     display: flex;
     align-items: center;
-    font-size: $font-size-14;
+    font-size: $font-size-16;
     line-height: px2rem(20px);
     letter-spacing: px2rem(0.25px);
-    text-transform: none;
     font-weight: 500;
     gap: 1rem;
+    border-radius: 0rem;
+    font-weight: 400;
+    line-height: 60px;
+    text-transform: none;
 }
 
 @mixin primary-button {
     @include button;
 
+    text-transform: uppercase;
     color: $white;
     background-color: $color-primary;
     height: px2rem(50px);
+    font-weight: 700;
 
     &:hover {
         background-color: $color-primary-dark;

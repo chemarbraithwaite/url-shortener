@@ -2,7 +2,7 @@
 @use 'sass:math';
 
 $font-size-root: 16px;
-$font-family: 'Montserrat' , sans-serif;
+$font-family: 'Poppins', sans-serif;
 
 @function px2rem($px) {
     $answer: ();
@@ -30,3 +30,4 @@ $font-size-30: px2rem(30px);
 $font-size-32: px2rem(32px);
 $font-size-36: px2rem(36px);
 $font-size-40: px2rem(40px);
+$font-size-56: px2rem(56px);

@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import { isValidUrl } from "../../utils";
 import classes from "./Landing.module.scss";
 import { Button, Card, TextField, Typography } from "@mui/material";
-import { AutoFixHigh, ContentCopy, Launch, Link } from "@mui/icons-material";
+import { ContentCopy, Launch, Link } from "@mui/icons-material";
 import { QRCode } from "../../components/QRCode";
-import { Logo } from "../../components/Logo/";
+import ToolBar from "../../components/ToolBar";
 
 export const LandingPage = () => {
   const [url, setUrl] = useState("");
@@ -46,82 +46,94 @@ export const LandingPage = () => {
 
   return (
     <div className={classes.Landing}>
-      <Card variant="outlined" className={classes.card}>
-        <Typography className={classes.label}>
-          <Link /> {shortUrl ? "Your long URL" : "Shorten a long URL"}
+      <ToolBar />
+      <div className={classes.content}>
+        <Typography variant="h2" className={classes.title}>
+          A fast and simple url shortener
         </Typography>
-        <TextField
-          variant="outlined"
-          size="small"
-          data-cy="url_input"
-          placeholder="Enter long link here"
-          className={classes.urlInput}
-          disabled={loading || Boolean(shortUrl)}
-          error={!isUrlValid}
-          helperText={!isUrlValid && "Please enter a valid URL"}
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        {shortUrl ? (
-          <>
-            <Typography>
-              <AutoFixHigh /> Short URL
-            </Typography>
-            <TextField
-              data-cy="shortened_url_input"
-              disabled={true}
-              type="text"
-              size="small"
-              value={shortUrl}
-            ></TextField>
-            <div className={classes.urlActionWrapper}>
-              <a target="_blank" href={shortUrl}>
-                <Button className={classes.urlAction}>
-                  <Launch />
+        <Typography variant="h5" className={classes.subTitle}>
+          Quick and effortless, input your long link to generate a shortened one
+          with <span>SnipLink</span>.
+        </Typography>
+        <Card variant="outlined" className={classes.card}>
+          <Typography className={classes.label}>
+            <Link /> {shortUrl ? "Your long URL" : "Shorten a long URL"}
+          </Typography>
+          <TextField
+            variant="outlined"
+            size="small"
+            data-cy="url_input"
+            placeholder="Enter long link here"
+            className={classes.urlInput}
+            disabled={loading || Boolean(shortUrl)}
+            error={!isUrlValid}
+            helperText={!isUrlValid && "Please enter a valid URL"}
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          {shortUrl && (
+            <>
+              <Typography>Your short link ✨</Typography>
+              <TextField
+                data-cy="shortened_url_input"
+                disabled={true}
+                type="text"
+                size="small"
+                value={shortUrl}
+              ></TextField>
+              <div className={classes.urlActionWrapper}>
+                <a target="_blank" href={shortUrl}>
+                  <Button className={classes.urlAction}>
+                    <Launch />
+                  </Button>
+                </a>
+
+                <Button
+                  data-cy="copy_url"
+                  onClick={handleCopyUrl}
+                  className={classes.urlAction}
+                >
+                  <ContentCopy /> Copy
                 </Button>
-              </a>
+              </div>
+
+              <QRCode text={shortUrl} />
 
               <Button
-                data-cy="copy_url"
-                onClick={handleCopyUrl}
-                className={classes.urlAction}
+                onClick={() => {
+                  setUrl("");
+                  setShortUrl("");
+                }}
+                className={classes.shortenAnother}
               >
-                <ContentCopy /> Copy
+                Shorten another Url
               </Button>
+            </>
+          )}
+
+          {loading && (
+            <div className={classes.loading}>
+              Snipping your link...
+              <img src="/loading.svg" alt="loading" />
             </div>
+          )}
 
-            <QRCode text={shortUrl} />
-
+          {!shortUrl && !loading && (
             <Button
-              onClick={() => {
-                setUrl("");
-                setShortUrl("");
-              }}
-              className={classes.shortenAnother}
+              data-cy="submit_url"
+              disabled={loading || url.trim().length === 0 || !isUrlValid}
+              onClick={handleOnSubmit}
+              className={classes.submitUrl}
             >
-              Shorten another Url
+              Shorten URL
             </Button>
-          </>
-        ) : (
-          <Button
-            data-cy="submit_url"
-            disabled={loading || url.trim().length === 0 || !isUrlValid}
-            onClick={handleOnSubmit}
-            className={classes.submitUrl}
-          >
-            {loading && (
-              <>
-                <div /> Shrinking url... <Logo className={classes.loading} />
-              </>
-            )}
-            {!loading && (
-              <>
-                Shorten Url <Logo />
-              </>
-            )}
-          </Button>
-        )}
-      </Card>
+          )}
+        </Card>
+      </div>
+      <div className={classes.background}>
+        <img src="/home-hero-social-sharing.png" alt="background" />
+      </div>
+      <footer />
     </div>
   );
 };

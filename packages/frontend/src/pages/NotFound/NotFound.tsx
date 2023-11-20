@@ -5,6 +5,7 @@ import check from "../../assets/check.svg";
 import resend from "../../assets/resend.svg";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import ToolBar from "../../components/ToolBar";
 
 export const NotFound = () => {
   const { linkId } = useParams();
@@ -19,6 +20,7 @@ export const NotFound = () => {
 
   return (
     <div className={classes.NotFound}>
+      <ToolBar />
       <WarningRounded className={classes.warning} />
 
       <Typography className={classes.title}>404 Not Found</Typography>
