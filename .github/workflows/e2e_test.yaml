@@ -9,7 +9,7 @@ on:
 jobs:
   cypress-run:
     env:
-      API_BASE_URL: ${{ env.QA_API_URL }}
+      API_BASE_URL: ${{ vars.QA_API_URL }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
