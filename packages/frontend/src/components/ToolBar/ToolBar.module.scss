@@ -1,0 +1,28 @@
+@import '../../styles/index.module.scss';
+
+.ToolBar {
+    width: 100%;
+    max-width: $breakpoint-desktop-lg;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 5vw;
+    align-items: center;
+    height: $tool-bar-height;
+    gap: 0.5rem;
+    font-weight: 400;
+    background-color: $white;
+    box-shadow: 0 4px 94px rgba(41, 45, 52, 0.14);
+    position: absolute;
+    top: 0;
+
+    img {
+        height: px2rem(45px);
+        width: px2rem(45px);
+    }
+
+    p {
+        font-size: $font-size-20;
+        font-weight: 400;
+    }
+
+}

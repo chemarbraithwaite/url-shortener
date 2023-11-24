@@ -1,0 +1,33 @@
+@use 'sass:list';
+@use 'sass:math';
+
+$font-size-root: 16px;
+$font-family: 'Poppins', sans-serif;
+
+@function px2rem($px) {
+    $answer: ();
+  
+    @each $value in $px {
+      $answer: list.append(
+        $answer,
+        math.div($value, $font-size-root) * 1rem,
+        $separator: space
+      );
+    }
+  
+    @return $answer;
+}
+  
+$font-size-10: px2rem(10px);
+$font-size-12: px2rem(12px);
+$font-size-14: px2rem(14px);
+$font-size-16: px2rem(16px);
+$font-size-18: px2rem(18px);
+$font-size-20: px2rem(20px);
+$font-size-24: px2rem(24px);
+$font-size-28: px2rem(28px);
+$font-size-30: px2rem(30px);
+$font-size-32: px2rem(32px);
+$font-size-36: px2rem(36px);
+$font-size-40: px2rem(40px);
+$font-size-56: px2rem(56px);

@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "bin": {
+    "backend": "bin/backend.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "dev": "cdk synth --no-staging > template.yaml && npm run start:api",
+    "start:api": "sam local start-api & docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.445.0",
+    "@types/aws-lambda": "^8.10.126",
+    "aws-cdk": "2.70.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.70.0",
+    "constructs": "^10.0.0",
+    "esbuild": "^0.19.5",
+    "generate-password-ts": "^1.6.5",
+    "source-map-support": "^0.5.21"
+  }
+}
